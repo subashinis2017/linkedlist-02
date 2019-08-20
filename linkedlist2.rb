@@ -31,6 +31,26 @@ def reverse_list(list, previous=nil)
     head = previous
 end
 
+def detect_cycle(list) 
+    cycle_present = false
+    if list == nil
+        cycle_present
+    else
+        fast = list.next_node
+        slow = list
+        while fast != nil && slow != nil && fast.next_node != nil
+            if fast == slow 
+                cycle_present = true
+                return cycle_present
+            else 
+                fast = fast.next_node.next_node
+                slow = slow.next_node
+            end
+        end
+        return cycle_present
+    end
+    
+end
 
 
 node1 = LinkedListNode.new(37)
@@ -46,3 +66,14 @@ revlist = reverse_list(node3, nil)
 
 print_values(revlist)
 
+puts "--------"
+puts "cycle detection"
+puts "--------"
+
+node4 = LinkedListNode.new(37)
+node5 = LinkedListNode.new(99, node4)
+node6 = LinkedListNode.new(12, node5)
+node4.next_node = node6
+
+cycle_present = detect_cycle(node4)
+puts cycle_present
